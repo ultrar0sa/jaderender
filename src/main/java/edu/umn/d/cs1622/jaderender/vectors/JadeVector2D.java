@@ -1,4 +1,4 @@
-package edu.umn.d.cs1622.jaderender;
+package edu.umn.d.cs1622.jaderender.vectors;
 
 public class JadeVector2D {
     private float[] vector;
@@ -46,5 +46,10 @@ public class JadeVector2D {
 
     public float get(int index){
         return vector[index];
+    }
+
+    @Override
+    public String toString() {
+        return vector[0] + " | " + vector[1];
     }
 }

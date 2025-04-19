@@ -1,7 +1,10 @@
-package edu.umn.d.cs1622.jaderender;
+package edu.umn.d.cs1622.jaderender.vectors;
+
+import edu.umn.d.cs1622.jaderender.JadeMatrix;
+import edu.umn.d.cs1622.jaderender.OrthographicCamera;
 
 public class JadeVector3D {
-    private float[] vector;
+    protected float[] vector;
 
     public JadeVector3D(){
         vector = new float[3];
@@ -47,11 +50,27 @@ public class JadeVector3D {
         return new JadeVector3D(vector[0]/scalar, vector[1]/scalar, vector[2]/scalar);
     }
 
+    public JadeVector2D projectToScreenspace(OrthographicCamera camera){
+        JadeVector3D projectedFromCamera = camera.orthographicProjection(this);
+        JadeVector3D transformed = JadeMatrix.viewplane(JadeMatrix.orthographicProjection(projectedFromCamera, new JadeVector3D(1,1,1), new JadeVector3D(-1,-1,-1)));
+        System.out.println("running");
+        return new JadeVector2D(transformed.get(0), transformed.get(1));
+    }
+
+    public float length(){
+        return (float) Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2)+ Math.pow(vector[2], 2));
+    }
+
     public void set(int index, float value){
         vector[index] = value;
     }
 
     public float get(int index){
         return vector[index];
+    }
+
+    @Override
+    public String toString() {
+        return vector[0] + " | " + vector[1] + " | " + vector[2];
     }
 }

@@ -1,9 +1,12 @@
-package edu.umn.d.cs1622.jaderender;
+package edu.umn.d.cs1622.jaderender.lines;
 
+import edu.umn.d.cs1622.jaderender.JadeRGB;
+import edu.umn.d.cs1622.jaderender.JadeRender;
+import edu.umn.d.cs1622.jaderender.vectors.JadeVector2D;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
-public class JadeLine {
+public class JadeLine2D {
     private float x0;
     private float y0;
     private float x1;
@@ -12,7 +15,7 @@ public class JadeLine {
     private JadeVector2D point0;
     private JadeVector2D point1;
 
-    public JadeLine(JadeVector2D point0, JadeVector2D point1){
+    public JadeLine2D(JadeVector2D point0, JadeVector2D point1){
         if(point0.get(0) > point1.get(0)){
             this.point0 = point1;
             this.point1 = point0;
@@ -26,7 +29,8 @@ public class JadeLine {
         y1 = point1.get(1);
     }
 
-    public void drawLine(Color color){ //see potential optimization on pg. 163
+    public void drawLine(JadeRGB jadeColor){//see potential optimization on pg. 163
+        Color color = jadeColor.toColor();
         PixelWriter writer = JadeRender.getWriter();
         float slope = (y1 - y0)/(x1 - x0);
         System.out.println("slope: " + slope);
@@ -77,7 +81,7 @@ public class JadeLine {
         }
     }
 
-    private float implictLine(float x, float y){
+    public float implictLine(float x, float y){
         float value = (y0 - y1) * x + (x1 - x0) * y + x0*y1 -x1*y0;
         return value;
     }
