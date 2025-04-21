@@ -70,7 +70,7 @@ public class JadeRender extends Application {
         }
 
         JadeTriangle3D pleaseworkagain = new JadeTriangle3D(new JadeVector3D(.75f, .75f, 1.0f), new JadeVector3D(.75f, .25f, 1.0f), new JadeVector3D(.5f, .5f, 1.0f)); // https://www.youtube.com/watch?v=pqE66RltUaQ
-        pleaseworkagain.projectToScreenSpace(camera).drawTriangle(new JadeRGB(Color.PURPLE));
+        pleaseworkagain.projectToScreenSpace(camera).drawTriangle(new JadeRGB(Color.HOTPINK));
         //JadeLine.drawLine(new JadeVector2D(canvasCenterX, (float) canvas.getHeight()), new JadeVector2D(canvasCenterX, 0.0f), Color.PURPLE );
 
 
@@ -85,16 +85,16 @@ public class JadeRender extends Application {
 //            } else if
             switch(key.getCode()){
                 case KeyCode.A:
-                    camera.updatePos(new JadeVector3D(0.1f, 0.0f, 0.0f));
-                    break;
-                case KeyCode.D:
                     camera.updatePos(new JadeVector3D(-0.1f, 0.0f, 0.0f));
                     break;
+                case KeyCode.D:
+                    camera.updatePos(new JadeVector3D(0.1f, 0.0f, 0.0f));
+                    break;
                 case KeyCode.W:
-                    camera.updatePos(new JadeVector3D(0.0f, 0.1f, 0.0f));
+                    camera.updatePos(new JadeVector3D(0.0f, -0.1f, 0.0f));
                     break;
                 case KeyCode.S:
-                    camera.updatePos(new JadeVector3D(0.0f, -0.1f, 0.0f));
+                    camera.updatePos(new JadeVector3D(0.0f, 0.1f, 0.0f));
                     break;
                 case KeyCode.Q:
                     camera.updatePos(new JadeVector3D(0.0f, 0.0f, 0.1f));
@@ -104,22 +104,22 @@ public class JadeRender extends Application {
                     break;
 
                 case KeyCode.J:
-                    camera.updateGaze(new JadeVector3D(-0.5f, 0.0f, 0.0f));
+                    camera.updateGaze(new JadeVector3D(-0.05f, 0.0f, 0.0f));
                     break;
                 case KeyCode.L:
-                    camera.updateGaze(new JadeVector3D(0.5f, 0.0f, 0.0f));
+                    camera.updateGaze(new JadeVector3D(0.05f, 0.0f, 0.0f));
                     break;
                 case KeyCode.I:
-                    camera.updateGaze(new JadeVector3D(0.0f, 0.5f, 0.0f));
+                    camera.updateGaze(new JadeVector3D(0.0f, 0.05f, 0.0f));
                     break;
                 case KeyCode.K:
-                    camera.updateGaze(new JadeVector3D(0.0f, -0.5f, 0.0f));
+                    camera.updateGaze(new JadeVector3D(0.0f, -0.05f, 0.0f));
                     break;
                 case KeyCode.U:
-                    camera.updateGaze(new JadeVector3D(0.0f, 0.0f, 0.5f));
+                    camera.updateGaze(new JadeVector3D(0.0f, 0.0f, 0.1f));
                     break;
-                case KeyCode.P:
-                    camera.updateGaze(new JadeVector3D(0.0f, 0.0f, -0.5f));
+                case KeyCode.O:
+                    camera.updateGaze(new JadeVector3D(0.0f, 0.0f, -0.1f));
                     break;
 
             }
@@ -137,7 +137,7 @@ public class JadeRender extends Application {
 
     public static void drawStuff(){
         JadeTriangle3D pleaseworkagain = new JadeTriangle3D(new JadeVector3D(.75f, .75f, 1.0f), new JadeVector3D(.75f, .25f, 1.0f), new JadeVector3D(.5f, .5f, 1.0f)); // https://www.youtube.com/watch?v=pqE66RltUaQ
-        pleaseworkagain.projectToScreenSpace(camera).drawTriangle(new JadeRGB(Color.PURPLE));
+        pleaseworkagain.projectToScreenSpace(camera).drawTriangle(new JadeRGB(Color.HOTPINK));
     }
     public static void main(String[] args) {
         launch();
