@@ -27,6 +27,18 @@ public class JadeMatrix { //i hate having to write a generalized matrix class. i
         return orthographicTransform.transform(vector3D);
     }
 
+    public static JadeVector3D perspectiveProjection(JadeVector3D vector3D, JadeVector3D leftBottomNear, JadeVector3D rightTopFar){
+        JadeMatrix perspectiveTransform = new JadeMatrix(new float[][] {
+                {leftBottomNear.get(2), 0.0f, 0.0f, 0.0f},
+                {0.0f, leftBottomNear.get(2), 0.0f, 0.0f},
+                {0.0f, 0.0f, leftBottomNear.get(2) + rightTopFar.get(2), -leftBottomNear.get(2)*rightTopFar.get(2)},
+                {0.0f, 0.0f, 1.0f, 0.0f}});
+
+       return orthographicProjection(perspectiveTransform.transform(vector3D),leftBottomNear, rightTopFar);
+
+
+    }
+
 
     public JadeMatrix(){
        matrix = new float[4][4];
@@ -46,7 +58,7 @@ public class JadeMatrix { //i hate having to write a generalized matrix class. i
             }
             transformedHVector.add(value);
         }
-        return new JadeVector3D(transformedHVector.get(0), transformedHVector.get(1), transformedHVector.get(2));
+        return new JadeVector3D(transformedHVector.get(0)/ transformedHVector.get(3), transformedHVector.get(1) / transformedHVector.get(3), transformedHVector.get(2) / transformedHVector.get(3));
     }
 
     public float[][] getMatrix() {

@@ -1,5 +1,7 @@
 package edu.umn.d.cs1622.jaderender;
 
+import edu.umn.d.cs1622.jaderender.cameras.OrthographicCamera;
+import edu.umn.d.cs1622.jaderender.cameras.PerspectiveCamera;
 import edu.umn.d.cs1622.jaderender.lines.JadeLine2D;
 import edu.umn.d.cs1622.jaderender.triangles.JadeTriangle2D;
 import edu.umn.d.cs1622.jaderender.triangles.JadeTriangle3D;
@@ -24,7 +26,7 @@ public class JadeRender extends Application {
     private static int canvasHeight = 500;
     private static JadeVector2D canvasOrigin;
     private static PixelWriter writer;
-    private static OrthographicCamera camera;
+    private static PerspectiveCamera camera;
 
 
 
@@ -33,7 +35,7 @@ public class JadeRender extends Application {
         Canvas canvas = new Canvas(500, 500);
         canvas.setOnMouseClicked(e -> {System.out.println("x: " + e.getX() + "| y: " + e.getY());});
         writer = canvas.getGraphicsContext2D().getPixelWriter();
-        camera = new OrthographicCamera();
+        camera = new PerspectiveCamera();
 
         canvasCenterX = (int) (canvas.getWidth() / 2);
         canvasCenterY = (int) (canvas.getWidth() / 2);

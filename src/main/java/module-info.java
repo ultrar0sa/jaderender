@@ -11,4 +11,6 @@ module edu.umn.d.cs1622.jaderender {
     opens edu.umn.d.cs1622.jaderender.lines to javafx.fxml;
     exports edu.umn.d.cs1622.jaderender.vectors;
     opens edu.umn.d.cs1622.jaderender.vectors to javafx.fxml;
+    exports edu.umn.d.cs1622.jaderender.cameras;
+    opens edu.umn.d.cs1622.jaderender.cameras to javafx.fxml;
 }

@@ -1,6 +1,7 @@
-package edu.umn.d.cs1622.jaderender;
+package edu.umn.d.cs1622.jaderender.cameras;
 
 
+import edu.umn.d.cs1622.jaderender.JadeMatrix;
 import edu.umn.d.cs1622.jaderender.vectors.JadeVector3D;
 
 public class OrthographicCamera {

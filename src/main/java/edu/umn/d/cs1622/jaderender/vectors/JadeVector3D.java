@@ -1,7 +1,8 @@
 package edu.umn.d.cs1622.jaderender.vectors;
 
 import edu.umn.d.cs1622.jaderender.JadeMatrix;
-import edu.umn.d.cs1622.jaderender.OrthographicCamera;
+import edu.umn.d.cs1622.jaderender.cameras.OrthographicCamera;
+import edu.umn.d.cs1622.jaderender.cameras.PerspectiveCamera;
 
 public class JadeVector3D {
     protected float[] vector;
@@ -53,6 +54,13 @@ public class JadeVector3D {
     public JadeVector2D projectToScreenspace(OrthographicCamera camera){
         JadeVector3D projectedFromCamera = camera.orthographicProjection(this);
         JadeVector3D transformed = JadeMatrix.viewplane(JadeMatrix.orthographicProjection(projectedFromCamera, new JadeVector3D(1,1,1), new JadeVector3D(-1,-1,-1)));
+        System.out.println("running");
+        return new JadeVector2D(transformed.get(0), transformed.get(1));
+    }
+
+    public JadeVector2D projectToScreenspace(PerspectiveCamera camera){
+        JadeVector3D projectedFromCamera = camera.perspectiveProjection(this);
+        JadeVector3D transformed = JadeMatrix.viewplane(JadeMatrix.perspectiveProjection(projectedFromCamera, new JadeVector3D(1,1,1), new JadeVector3D(-1,-1,-1)));
         System.out.println("running");
         return new JadeVector2D(transformed.get(0), transformed.get(1));
     }

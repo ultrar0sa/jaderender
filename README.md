@@ -10,6 +10,13 @@ current state
 
 - can draw lines of any slope (hopefully)
 - can draw 2D triangles
-- might be able to draw 3D with orthographic camera but i have no idea if it actually working or not. 
+- drawing 3d triangles with perspective and orthographic cameras!
+
+todo
+
+- make less scuffed
+- cubes? planes? import meshes?
+- lighting and shading
+
 
 theme for this project: [this](https://www.youtube.com/watch?v=MAviknTRiz4) 

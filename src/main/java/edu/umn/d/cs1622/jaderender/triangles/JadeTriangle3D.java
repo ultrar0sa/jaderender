@@ -1,6 +1,7 @@
 package edu.umn.d.cs1622.jaderender.triangles;
 
-import edu.umn.d.cs1622.jaderender.OrthographicCamera;
+import edu.umn.d.cs1622.jaderender.cameras.OrthographicCamera;
+import edu.umn.d.cs1622.jaderender.cameras.PerspectiveCamera;
 import edu.umn.d.cs1622.jaderender.vectors.JadeVector2D;
 import edu.umn.d.cs1622.jaderender.vectors.JadeVector3D;
 
@@ -17,6 +18,20 @@ public class JadeTriangle3D {
     }
 
     public JadeTriangle2D projectToScreenSpace(OrthographicCamera camera){
+        JadeVector2D v02D = vertex0.projectToScreenspace(camera);
+        JadeVector2D v12D = vertex1.projectToScreenspace(camera);
+        JadeVector2D v22D = vertex2.projectToScreenspace(camera);
+
+//        System.out.println(v02D);
+//        System.out.println(v12D);
+//        System.out.println(v22D);
+
+        return new JadeTriangle2D(v02D, v12D, v22D, null, null, null);
+
+    }
+
+
+    public JadeTriangle2D projectToScreenSpace(PerspectiveCamera camera){
         JadeVector2D v02D = vertex0.projectToScreenspace(camera);
         JadeVector2D v12D = vertex1.projectToScreenspace(camera);
         JadeVector2D v22D = vertex2.projectToScreenspace(camera);
