@@ -1,6 +1,7 @@
 module edu.umn.d.cs1622.jaderender {
     requires javafx.controls;
     requires java.desktop;
+    requires java.sql;
 
 
     opens edu.umn.d.cs1622.jaderender to javafx.fxml;

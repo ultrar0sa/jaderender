@@ -33,12 +33,6 @@ public class JadeRGB extends JadeVector3D {
         vector[2] = Math.clamp(vector[2], 0, 255);
     }
 
-    public void clampRGB(JadeRGB vector3D){
-        vector3D.set(0, Math.clamp(vector3D.get(0), 0, 255));
-        vector3D.set(1, Math.clamp(vector3D.get(1), 0, 255));
-        vector3D.set(2, Math.clamp(vector3D.get(2), 0, 255));
-    }
-
     public JadeRGB clampRGB(JadeVector3D vector3D){
         vector3D.set(0, Math.clamp(vector3D.get(0), 0, 255));
         vector3D.set(1, Math.clamp(vector3D.get(1), 0, 255));
@@ -49,34 +43,4 @@ public class JadeRGB extends JadeVector3D {
     public Color toColor(){
         return Color.rgb((int) vector[0], (int) vector[1], (int) vector[2]);
     }
-
-//    public JadeRGB vectorAdd(JadeRGB toAdd){
-//        JadeRGB vector3D = (JadeRGB) super.vectorAdd(toAdd);
-//
-//        clampRGB(vector3D);
-//        return vector3D;
-//    }
-//
-//    public JadeRGB vectorSub(JadeRGB toSub){
-//        JadeRGB vector3D = (JadeRGB) super.vectorSub(toSub);
-//
-//        clampRGB(vector3D);
-//        return vector3D;
-//    }
-//
-//    public JadeRGB scalarMultiplication(float scalar){
-//        JadeRGB vector3D = (JadeRGB) super.scalarMultiplication(scalar);
-//
-//        clampRGB(vector3D);
-//        return vector3D;
-//    }
-
-//    public JadeRGB scalarDivision(float scalar) {
-//        JadeRGB vector3D = (JadeRGB) super.scalarDivision(scalar);
-//
-//
-//        clampRGB(vector3D);
-//        return vector3D;
-//
-//    }
 }

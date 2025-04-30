@@ -33,7 +33,7 @@ public class JadeMatrix { //i hate having to write a generalized matrix class. i
                 {0.0f, leftBottomNear.get(2), 0.0f, 0.0f},
                 {0.0f, 0.0f, leftBottomNear.get(2) + rightTopFar.get(2), -leftBottomNear.get(2)*rightTopFar.get(2)},
                 {0.0f, 0.0f, 1.0f, 0.0f}});
-
+        //System.out.println("perspective transform: " + perspectiveTransform.transform(vector3D));
        return orthographicProjection(perspectiveTransform.transform(vector3D),leftBottomNear, rightTopFar);
 
 

@@ -21,6 +21,9 @@ public class JadeTriangle2D {
        this.vertex0 = vertex0;
        this.vertex1 = vertex1;
        this.vertex2 = vertex2;
+       System.out.println("vertex0: " + vertex0);
+       System.out.println("vertex1: " + vertex1);
+       System.out.println("vertex2: " + vertex2);
 
        this.vertex0Color = v0Color;
        this.vertex1Color = v1Color;
@@ -62,12 +65,15 @@ public class JadeTriangle2D {
                             color = new JadeRGB().clampRGB(vertex0Color.scalarMultiplication(a).vectorAdd(vertex1Color.scalarMultiplication(b).vectorAdd(vertex2Color.scalarMultiplication(c))));
                         }
                         //System.out.println("x: " + x + " | y: " + y);
-                        writer.setColor(x, y, color.toColor());
+                        if(!(x > JadeRender.getCanvasHeight() || y > JadeRender.getCanvasHeight() || x < 0.0f || y < 0.0f)){
+                            writer.setColor(x, y, color.toColor());
+                        }
+
                     }
                 }
             }
         }
-        System.out.println("drawing");
+        //System.out.println("drawing");
     }
 
 

@@ -1,6 +1,9 @@
 package edu.umn.d.cs1622.jaderender.vectors;
 
+import edu.umn.d.cs1622.jaderender.JadeClipping;
 import edu.umn.d.cs1622.jaderender.JadeMatrix;
+import edu.umn.d.cs1622.jaderender.JadeRender;
+import edu.umn.d.cs1622.jaderender.cameras.Camera;
 import edu.umn.d.cs1622.jaderender.cameras.OrthographicCamera;
 import edu.umn.d.cs1622.jaderender.cameras.PerspectiveCamera;
 
@@ -51,19 +54,25 @@ public class JadeVector3D {
         return new JadeVector3D(vector[0]/scalar, vector[1]/scalar, vector[2]/scalar);
     }
 
-    public JadeVector2D projectToScreenspace(OrthographicCamera camera){
-        JadeVector3D projectedFromCamera = camera.orthographicProjection(this);
-        JadeVector3D transformed = JadeMatrix.viewplane(JadeMatrix.orthographicProjection(projectedFromCamera, new JadeVector3D(1,1,1), new JadeVector3D(-1,-1,-1)));
-        System.out.println("running");
-        return new JadeVector2D(transformed.get(0), transformed.get(1));
+    public JadeVector2D projectToScreenspace(Camera camera){
+        if(camera instanceof OrthographicCamera){
+            JadeVector3D projectedFromCamera = camera.projection(this);
+            JadeVector3D transformed = JadeMatrix.viewplane(JadeMatrix.orthographicProjection(projectedFromCamera, new JadeVector3D(1,1,1), new JadeVector3D(-1,-1,-1)));
+            //System.out.println("running");
+            return new JadeVector2D(transformed.get(0), transformed.get(1));
+        } else {
+            JadeVector3D leftBottomNear = JadeRender.getLeftBottomNear();
+            JadeVector3D rightTopFar = JadeRender.getRightTopFar();
+            JadeClipping.checkClipping(this, leftBottomNear, rightTopFar);
+            JadeVector3D projectedFromCamera = camera.projection(this);
+            System.out.println("projected: " + projectedFromCamera);
+            JadeVector3D transformed = JadeMatrix.viewplane(JadeMatrix.perspectiveProjection(projectedFromCamera, leftBottomNear,rightTopFar));
+            System.out.println("transformed: " + transformed);
+            //System.out.println("running");
+            return new JadeVector2D(transformed.get(0), transformed.get(1));
+        }
     }
 
-    public JadeVector2D projectToScreenspace(PerspectiveCamera camera){
-        JadeVector3D projectedFromCamera = camera.perspectiveProjection(this);
-        JadeVector3D transformed = JadeMatrix.viewplane(JadeMatrix.perspectiveProjection(projectedFromCamera, new JadeVector3D(1,1,1), new JadeVector3D(-1,-1,-1)));
-        System.out.println("running");
-        return new JadeVector2D(transformed.get(0), transformed.get(1));
-    }
 
     public float length(){
         return (float) Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2)+ Math.pow(vector[2], 2));

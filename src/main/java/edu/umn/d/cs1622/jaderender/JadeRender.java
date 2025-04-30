@@ -1,5 +1,6 @@
 package edu.umn.d.cs1622.jaderender;
 
+import edu.umn.d.cs1622.jaderender.cameras.Camera;
 import edu.umn.d.cs1622.jaderender.cameras.OrthographicCamera;
 import edu.umn.d.cs1622.jaderender.cameras.PerspectiveCamera;
 import edu.umn.d.cs1622.jaderender.lines.JadeLine2D;
@@ -18,63 +19,55 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class JadeRender extends Application {
+
     private static int canvasCenterX;
     private static int canvasCenterY;
+    private static JadeVector3D leftBottomNear;
+    private static JadeVector3D rightTopFar;
+    private static int[][] zbuffer;
     private static int canvasWidth = 500;
     private static int canvasHeight = 500;
     private static JadeVector2D canvasOrigin;
     private static PixelWriter writer;
-    private static PerspectiveCamera camera;
+    private static Camera camera;
 
+    public static void calculateFrustrum(float right, float top, float far, float near){
+        rightTopFar = new JadeVector3D(right*(canvasWidth/canvasHeight), top*(canvasWidth/canvasHeight), far);
+        leftBottomNear = new JadeVector3D(1,1, -far);
+    }
 
+    public static JadeVector3D getLeftBottomNear() {
+        return leftBottomNear;
+    }
+
+    public static JadeVector3D getRightTopFar() {
+        return rightTopFar;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
-        Canvas canvas = new Canvas(500, 500);
+        Canvas canvas = new Canvas(canvasWidth, canvasHeight);
+        zbuffer = new int[canvasHeight][canvasWidth];
+        for(int row = 0; row < zbuffer.length; ++row){
+            for(int col = 0; col < zbuffer[row].length; ++col){
+                zbuffer[row][col] = Integer.MAX_VALUE;
+            }
+        }
+
         canvas.setOnMouseClicked(e -> {System.out.println("x: " + e.getX() + "| y: " + e.getY());});
         writer = canvas.getGraphicsContext2D().getPixelWriter();
         camera = new PerspectiveCamera();
 
         canvasCenterX = (int) (canvas.getWidth() / 2);
-        canvasCenterY = (int) (canvas.getWidth() / 2);
+        canvasCenterY = (int) (canvas.getHeight()/ 2);
+        calculateFrustrum(-1,-1, -1, 1); //lmao
+
         canvasOrigin = new JadeVector2D(canvasCenterX, canvasCenterY);
 
-        boolean doLines = false;
-        if(doLines) {
-            JadeLine2D blue = new JadeLine2D(new JadeVector2D(0.0f, 0.0f), new JadeVector2D(500.0f, 500.0f));
-            JadeLine2D red = new JadeLine2D(new JadeVector2D(0.0f, 500.0f), new JadeVector2D(500.0f, 0.0f));
-            JadeLine2D green = new JadeLine2D(new JadeVector2D(0.0f, canvasCenterY), new JadeVector2D((float) canvas.getWidth(), canvasCenterY));
-            JadeLine2D purple = new JadeLine2D(new JadeVector2D(canvasCenterX, 0.0f), new JadeVector2D(canvasCenterX, (float) canvas.getHeight()));
-            blue.drawLine(new JadeRGB(Color.BLUE));
-            red.drawLine(new JadeRGB(Color.RED));
-            green.drawLine(new JadeRGB(Color.GREEN));
-            purple.drawLine(new JadeRGB(Color.PURPLE));
-
-            JadeLine2D teal = new JadeLine2D(new JadeVector2D(0.0f, 0.0f), new JadeVector2D(50.0f, 500.0f));
-            JadeLine2D orange = new JadeLine2D(new JadeVector2D(0.0f, 0.0f), new JadeVector2D(500.0f, 20.0f));
-            JadeLine2D darkGreen = new JadeLine2D(new JadeVector2D(0.0f, 500.0f), new JadeVector2D(500.0f, 250.0f));
-            JadeLine2D hotpink = new JadeLine2D(new JadeVector2D(0.0f, 500.0f), new JadeVector2D(100.0f, 0.0f));
-            teal.drawLine(new JadeRGB(Color.TEAL));
-            orange.drawLine(new JadeRGB(Color.ORANGE));
-            darkGreen.drawLine(new JadeRGB(Color.DARKGREEN));
-            hotpink.drawLine(new JadeRGB(Color.HOTPINK));
-        }
-
-        boolean do2DTriangles = false;
-        if(do2DTriangles) {
-            JadeTriangle2D pleaseJustFuckingWorkTriangle = new JadeTriangle2D(new JadeVector2D(100.0f, 100.0f), new JadeVector2D(100.0f, 200.0f), new JadeVector2D(200.0f, 200.0f), new JadeRGB(7, 21, 205), new JadeRGB(181, 54, 218), new JadeRGB(74, 201, 37)); //do not ask where i got the colors.
-            pleaseJustFuckingWorkTriangle.drawTriangle(new JadeRGB(Color.HOTPINK)); //first time works. happiness.
-
-            JadeTriangle2D thisShouldNotWork = new JadeTriangle2D(new JadeVector2D(100.0f, 100.0f), new JadeVector2D(100.0f, 200.0f), new JadeVector2D(0, 100.0f), new JadeRGB(7, 21, 205), new JadeRGB(181, 54, 218), new JadeRGB(74, 201, 37)); //do not ask where i got the colors.
-            thisShouldNotWork.drawTriangle(new JadeRGB(Color.RED)); //it does now! (this was checking what happens when you draw triangles right next to each other. it now has no gaps!)
-        }
-
-        JadeTriangle3D pleaseworkagain = new JadeTriangle3D(new JadeVector3D(.75f, .75f, 1.0f), new JadeVector3D(.75f, .25f, 1.0f), new JadeVector3D(.5f, .5f, 1.0f)); // https://www.youtube.com/watch?v=pqE66RltUaQ
-        pleaseworkagain.projectToScreenSpace(camera).drawTriangle(new JadeRGB(Color.HOTPINK));
-        //JadeLine.drawLine(new JadeVector2D(canvasCenterX, (float) canvas.getHeight()), new JadeVector2D(canvasCenterX, 0.0f), Color.PURPLE );
-
+        drawStuff();
 
         Group group = new Group(canvas);
         Scene scene = new Scene(group);
@@ -138,8 +131,19 @@ public class JadeRender extends Application {
     }
 
     public static void drawStuff(){
-        JadeTriangle3D pleaseworkagain = new JadeTriangle3D(new JadeVector3D(.75f, .75f, 1.0f), new JadeVector3D(.75f, .25f, 1.0f), new JadeVector3D(.5f, .5f, 1.0f)); // https://www.youtube.com/watch?v=pqE66RltUaQ
-        pleaseworkagain.projectToScreenSpace(camera).drawTriangle(new JadeRGB(Color.HOTPINK));
+        JadePlane plane = new JadePlane(new JadeVector3D(1f, 1f, 5.0f), new JadeVector3D(0.0f, 0.0f, 5.0f), new JadeRGB(Color.HOTPINK));
+        ArrayList<Shape> listOfShapes = new ArrayList<>();
+        listOfShapes.add(plane);
+       // JadePlane plane2 = new JadePlane(new JadeVector3D(.3f, .3f, 1.0f), new JadeVector3D(.70f, .70f, 1.0f), new JadeRGB(Color.GREEN));
+
+        for(Shape shape : listOfShapes){
+            shape.drawShape(camera);
+        }
+
+        System.out.println(rightTopFar);
+        System.out.println(leftBottomNear);
+
+        //plane2.drawShape(camera);
     }
     public static void main(String[] args) {
         launch();
