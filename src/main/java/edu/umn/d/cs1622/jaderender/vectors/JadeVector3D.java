@@ -7,6 +7,10 @@ import edu.umn.d.cs1622.jaderender.cameras.Camera;
 import edu.umn.d.cs1622.jaderender.cameras.OrthographicCamera;
 import edu.umn.d.cs1622.jaderender.cameras.PerspectiveCamera;
 
+/**
+ * Basic 3D vector class.
+ * @author Jade Lukken
+ */
 public class JadeVector3D {
     protected float[] vector;
 

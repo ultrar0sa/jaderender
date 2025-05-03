@@ -42,7 +42,11 @@ public class JadeLine3D extends Shape {
         return point1;
     }
 
-    private JadeLine2D projectToScreenSpace(){
+    /**
+     * Projects 3D line to be a 2D line
+     * @return 2D line
+     */
+    private JadeLine2D projectToScreenSpace(Camera camera){
        JadeVector3D p = JadeMatrix.viewplane(JadeMatrix.orthographicProjection(point0, new JadeVector3D(1,1,1), new JadeVector3D(-1,-1,-1)));
        JadeVector3D q = JadeMatrix.viewplane(JadeMatrix.orthographicProjection(point1, new JadeVector3D(1,1,1), new JadeVector3D(-1,-1,-1)));
 
@@ -53,6 +57,6 @@ public class JadeLine3D extends Shape {
 
     @Override
     public void drawShape(Camera camera) {
-        projectToScreenSpace().drawLine(color);
+        projectToScreenSpace(camera).drawLine(color);
     }
 }

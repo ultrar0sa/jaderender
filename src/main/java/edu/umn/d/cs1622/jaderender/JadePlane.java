@@ -7,6 +7,10 @@ import edu.umn.d.cs1622.jaderender.vectors.JadeVector3D;
 import javafx.scene.paint.Color;
 
 
+/**
+ * Basic Plane, subclass of shape
+ * @author Jade Lukken
+ */
 public class JadePlane extends Shape {
     private JadeTriangle3D triangle0;
     private JadeTriangle3D triangle1;
@@ -15,6 +19,12 @@ public class JadePlane extends Shape {
     private JadeVector3D point1;
     private JadeRGB color;
 
+    /**
+     * Basic Plane, subclass of shape
+     * @param point0 a point in 3D space.
+     * @param point1 a point in 3D space.
+     * @param color Color of plane
+     */
     public JadePlane(JadeVector3D point0, JadeVector3D point1, JadeRGB color){
         this.point0 = point0;
         this.point1 = point1;

@@ -33,7 +33,6 @@ public class JadeRender extends Application {
     private static JadeVector2D canvasOrigin;
     private static PixelWriter writer;
     private static Camera camera;
-
     public static void calculateFrustrum(float right, float top, float far, float near){
         rightTopFar = new JadeVector3D(right*(canvasWidth/canvasHeight), top*(canvasWidth/canvasHeight), far);
         leftBottomNear = new JadeVector3D(1,1, -far);

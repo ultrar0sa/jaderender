@@ -6,6 +6,10 @@ import edu.umn.d.cs1622.jaderender.vectors.JadeVector2D;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
+/**
+ * Basic 2D line, not really used for anything, just as a sanity check
+ * @author Jade Lukken
+ */
 public class JadeLine2D {
     private float x0;
     private float y0;
@@ -29,6 +33,10 @@ public class JadeLine2D {
         y1 = point1.get(1);
     }
 
+    /**
+     * Draws a 2D line.
+     * @param jadeColor
+     */
     public void drawLine(JadeRGB jadeColor){//see potential optimization on pg. 163
         Color color = jadeColor.toColor();
         PixelWriter writer = JadeRender.getWriter();

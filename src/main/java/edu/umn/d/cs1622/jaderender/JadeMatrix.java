@@ -5,10 +5,19 @@ import edu.umn.d.cs1622.jaderender.vectors.JadeVector3D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * 4x4 Matrix Transformations
+ * @author Jade Lukken
+ */
 public class JadeMatrix { //i hate having to write a generalized matrix class. i hate it. but it is necessary
     private float[][] matrix;
 
 
+    /**
+     * Viewplane Transformation
+     * @param vector3D
+     * @return Transformed Vector
+     */
     public static JadeVector3D viewplane(JadeVector3D vector3D){
         JadeMatrix viewplaneTransform = new JadeMatrix(new float[][] {
                 {(float)JadeRender.getCanvasWidth()/2, 0.0f, 0.0f, ((float)JadeRender.getCanvasWidth())-1.0f/2.0f},
@@ -18,6 +27,11 @@ public class JadeMatrix { //i hate having to write a generalized matrix class. i
         return viewplaneTransform.transform(vector3D);
     }
 
+    /**
+     * Orthographic Projection
+     * @param vector3D
+     * @return Transformed Vector
+     */
     public static JadeVector3D orthographicProjection(JadeVector3D vector3D, JadeVector3D leftBottomNear, JadeVector3D rightTopFar){
         JadeMatrix orthographicTransform = new JadeMatrix(new float[][] {
                 {2.0f/(rightTopFar.get(0)-leftBottomNear.get(0)), 0.0f, 0.0f, -((rightTopFar.get(0) + leftBottomNear.get(0))/(rightTopFar.get(0)-leftBottomNear.get(0)))},
@@ -26,7 +40,11 @@ public class JadeMatrix { //i hate having to write a generalized matrix class. i
                 {0.0f, 0.0f, 0.0f, 1.0f}});
         return orthographicTransform.transform(vector3D);
     }
-
+    /**
+     * Perspective projection
+     * @param vector3D
+     * @return Transformed Vector
+     */
     public static JadeVector3D perspectiveProjection(JadeVector3D vector3D, JadeVector3D leftBottomNear, JadeVector3D rightTopFar){
         JadeMatrix perspectiveTransform = new JadeMatrix(new float[][] {
                 {leftBottomNear.get(2), 0.0f, 0.0f, 0.0f},
@@ -47,6 +65,11 @@ public class JadeMatrix { //i hate having to write a generalized matrix class. i
         this.matrix = matrix;
     }
 
+    /**
+     * Matrix Multiplication
+     * @param vectorToTransform
+     * @return Transformed Vector
+     */
     public JadeVector3D transform(JadeVector3D vectorToTransform){
         ArrayList<Float> hVector = new ArrayList<>(Arrays.asList(vectorToTransform.get(0), vectorToTransform.get(1), vectorToTransform.get(2), 1.0f));
         ArrayList<Float> transformedHVector = new ArrayList<>();

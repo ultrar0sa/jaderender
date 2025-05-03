@@ -34,6 +34,10 @@ public class JadeTriangle2D {
        line20 = new JadeLine2D(vertex2, vertex0);
     }
 
+    /**
+     * Draws a triangle in 2D space.
+     * @param color
+     */
     public void drawTriangle(JadeRGB color){
         PixelWriter writer = JadeRender.getWriter();
         float a;

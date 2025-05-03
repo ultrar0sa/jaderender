@@ -5,6 +5,10 @@ import edu.umn.d.cs1622.jaderender.vectors.JadeVector3D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Unfinished clipping util. Do not use.
+ * @author Jade Lukken
+ */
 public class JadeClipping { //unfinished, to be implemented over summer.
 
     private static ArrayList<Float> hNear;

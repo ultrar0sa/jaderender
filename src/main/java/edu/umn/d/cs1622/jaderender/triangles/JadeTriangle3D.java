@@ -8,6 +8,10 @@ import edu.umn.d.cs1622.jaderender.cameras.PerspectiveCamera;
 import edu.umn.d.cs1622.jaderender.vectors.JadeVector2D;
 import edu.umn.d.cs1622.jaderender.vectors.JadeVector3D;
 
+/**
+ * 3D triangle subclass of shape.
+ * @author Jade Lukken
+ */
 public class JadeTriangle3D extends Shape {
     private JadeVector3D vertex0;
     private JadeVector3D vertex1;
@@ -23,8 +27,11 @@ public class JadeTriangle3D extends Shape {
     }
 
 
-
-
+    /**
+     * Projects triangle to screenspace.
+     * @param camera
+     * @return 2D triangle.
+     */
     public JadeTriangle2D projectToScreenSpace(Camera camera){
         JadeVector2D v02D = vertex0.projectToScreenspace(camera);
         JadeVector2D v12D = vertex1.projectToScreenspace(camera);

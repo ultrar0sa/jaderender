@@ -3,6 +3,10 @@ package edu.umn.d.cs1622.jaderender;
 import edu.umn.d.cs1622.jaderender.vectors.JadeVector3D;
 import javafx.scene.paint.Color;
 
+/**
+ * Scuffed to all hell RGB class. Really should've used the already there JavaFX color.
+ * @author Jade Lukken
+ */
 public class JadeRGB extends JadeVector3D {
     public JadeRGB(){
         vector[0] = 255;
@@ -11,6 +15,12 @@ public class JadeRGB extends JadeVector3D {
         //pink as a default
     }
 
+    /**
+     * Scuffed to all hell RGB class. Really should've used the already there JavaFX color.
+     * @param r
+     * @param g
+     * @param b
+     */
     public JadeRGB(int r, int g, int b){
         vector[0] = r;
         vector[1] = g;
@@ -19,6 +29,10 @@ public class JadeRGB extends JadeVector3D {
         clampRGB();
     }
 
+    /**
+     * Scuffed to all hell RGB class. Really should've used the already there JavaFX color.
+     * @param color
+     */
     public JadeRGB(Color color){
         vector[0] = (float) color.getRed() * 255;
         vector[1] = (float) color.getGreen() * 255;
@@ -27,12 +41,20 @@ public class JadeRGB extends JadeVector3D {
         clampRGB(); //better to be safe than sorry
     }
 
+    /**
+     * Clamps values of RGB to below 255 and above 0.
+     */
     public void clampRGB(){
         vector[0] = Math.clamp(vector[0], 0, 255);
         vector[1] = Math.clamp(vector[1], 0, 255);
         vector[2] = Math.clamp(vector[2], 0, 255);
     }
 
+    /**
+     * Clamps values of RGB to below 255 and above 0.
+     * @param vector3D
+     * @return new, clamped JadeVector3D.
+     */
     public JadeRGB clampRGB(JadeVector3D vector3D){
         vector3D.set(0, Math.clamp(vector3D.get(0), 0, 255));
         vector3D.set(1, Math.clamp(vector3D.get(1), 0, 255));
@@ -40,6 +62,9 @@ public class JadeRGB extends JadeVector3D {
         return new JadeRGB((int) vector3D.get(0), (int) vector3D.get(1), (int) vector3D.get(2));
     }
 
+    /**
+     * @return Basic JavaFX color.
+     */
     public Color toColor(){
         return Color.rgb((int) vector[0], (int) vector[1], (int) vector[2]);
     }
